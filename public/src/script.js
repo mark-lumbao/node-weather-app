@@ -1,5 +1,3 @@
-console.log('Weather app coming soon!');
-
 const weatherForm = document.querySelector('form');
 const search = document.querySelector('input');
 const forecastResultTitle = document.querySelector('#forecast-result').querySelector('h3');
@@ -18,7 +16,7 @@ weatherForm.addEventListener('submit',(event) => {
         forecastResultTitle.textContent = 'Loading...';
         forecastResult.textContent = '';
 
-        fetch('http://localhost:3000/weather?address='+address).then((response)=>{
+        fetch('/weather?address='+address).then((response)=>{
             response.json().then((data) => {
 
                 if(data.error){ 
