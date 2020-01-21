@@ -51,10 +51,12 @@ const getForecastWithGeocoding = (address,callback) => {
     geocode(address,(err,response = {}) => {
         if(err){ return callback(err,undefined); }
         const {latitude,longitude} = response;
+        console.log({latitude,longitude});
         forecast(latitude, longitude, (error, data) => {
             if(error){ return callback(error,undefined); }
-            const {summary,temperature,precipProbability} = data;
+            const {timezone,summary,temperature,precipProbability} = data;
             callback(undefined,{ 
+                timezone: timezone,
                 location: response, 
                 forecastData: data, 
                 forecastSummary: `${summary} It is currently ${temperature} degrees out. There is a ${precipProbability}% chance of rain.`
@@ -71,11 +73,12 @@ app.get('/weather',(req,res) => {
     getForecastWithGeocoding(req.query.address,(err,response = {})=>{
         if(err){ return res.send({error: err}) }
         
-        const {location,forecastSummary} = response;
+        const {timezone,location,forecastSummary} = response;
         res.send({
             address: req.query.address,
             location: location.location,
-            forecast: forecastSummary
+            forecast: forecastSummary,
+            timezone: timezone
         });
     });
 });

@@ -12,10 +12,12 @@ const forecast = (latitude,longitude,callback) => {
             const temperature =  body.currently.temperature;
             const precipProbability = body.currently.precipProbability;
             const summary = body.daily.summary;
+            const timeZone = body.timezone;
             callback(undefined,{
                 temperature: temperature,
                 precipProbability: precipProbability,
-                summary: summary
+                summary: summary,
+                timezone: timeZone
             })
         }
     })
